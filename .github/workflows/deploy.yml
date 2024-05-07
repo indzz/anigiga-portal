@@ -26,12 +26,12 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 20
+      - run: npm ci
       - script: |
           apk update && apk --no-cache add git
           git config --global credential.helper store
           echo "https://${{ vars.GITLAB_USER_NAME }}:${{ secrets.GITLAB_PERSONAL_TOKEN }}@gitlab.com" > ~/.git-credentials
-          npm ci
-          npm run generate
+      - run: npm run generate
 #          tar -zcvf release.tgz dist
 
       - name: Deploy
