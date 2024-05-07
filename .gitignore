@@ -1,0 +1,8 @@
+.env
+yarn-error.log
+.idea/
+_ide_helper_models.php
+_ide_helper.php
+node_modules
+.nuxt
+.dist

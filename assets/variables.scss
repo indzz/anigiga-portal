@@ -1,0 +1,12 @@
+// Ref: https://github.com/nuxt-community/vuetify-module#customvariables
+//
+// The variables you want to modify
+// $font-size-root: 20px;
+
+$shadow-key-umbra-opacity: rgba(136, 136, 136, 0.16);
+$shadow-key-penumbra-opacity: rgba(136, 136, 136, 0.14);
+$shadow-key-ambient-opacity: rgba(136, 136, 136, 0.12);
+
+$material-light: ('background': #F8FAFB);
+
+$body-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, PingFang TC, Heiti TC, Microsoft JhengHei, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;

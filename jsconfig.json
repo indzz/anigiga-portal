@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/layouts/*": ["layouts/*"],
+      "@/config/*": ["config/*"],
+      "@/apis/*": ["apis/*"],
+      "@/components/*": ["components/*"],
+      "@/middleware/*": ["middleware/*"],
+      "@/static/*": ["static/*"]
+    }
+  },
+  "exclude": ["node_modules", ".nuxt", "dist"]
+}

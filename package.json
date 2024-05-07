@@ -1,0 +1,50 @@
+{
+  "name": "indzz-admin-panel",
+  "version": "1.1.0",
+  "description": "INDZZ Admin panel",
+  "author": "INDZZ",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "deploy": "dep deploy production"
+  },
+  "dependencies": {
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dotenv": "^1.4.0",
+    "@tinymce/tinymce-vue": "^3.2.0",
+    "content-disposition": "^0.5.3",
+    "core-js": "^3.19.3",
+    "date-fns": "^2.15.0",
+    "draggable-vue-directive": "^2.1.0",
+    "lodash": "^4.17.21",
+    "nuxt": "^2.15.8",
+    "tinymce": "~5.2.0",
+    "vee-validate": "^3.3.8",
+    "vue-i18n": "^8.20.0",
+    "vue-server-renderer": "^2.6.14",
+    "vue-template-compiler": "^2.6.14",
+    "vuedraggable": "^2.24.0",
+    "vuetify-advanced-datatable": "git+ssh://gitlab.com/indzz/vuetify-advanced-datatable.git#2.2.0",
+    "vuetify-configurable-field": "git+ssh://gitlab.com/indzz/vuetify-configurable-field.git#2.1.10",
+    "vuetify-upload-zone": "git+ssh://gitlab.com/indzz/vuetify-upload-zone.git#1.1.0",
+    "vuex": "^3.4.0",
+    "webpack": "^4.46.0"
+  },
+  "devDependencies": {
+    "@indzz/nuxt-api-manager": "^1.0.0",
+    "@mdi/font": "^5.4.55",
+    "sass": "~1.32.1",
+    "sass-loader": "^10.2.0",
+    "@nuxtjs/vuetify": "^1.12.3",
+    "@vue/test-utils": "^1.3.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^27.4.4",
+    "jest": "^27.4.4",
+    "postcss": "^8.4.23",
+    "vue-jest": "^3.0.4"
+  }
+}
