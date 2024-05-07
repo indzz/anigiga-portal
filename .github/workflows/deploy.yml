@@ -27,9 +27,8 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-        run: |
-          npm ci
-          npm run generate
+      - run: npm ci
+      - run: npm run generate
 #          tar -zcvf release.tgz dist
 
       - name: "Upload Artifact"
