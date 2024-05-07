@@ -27,12 +27,11 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - script: |
-          apk update && apk --no-cache add git
-          git config --global credential.helper store
-          echo "https://${{ vars.GITLAB_USER_NAME }}:${{ secrets.GITLAB_PERSONAL_TOKEN }}@gitlab.com" > ~/.git-credentials
+      - run: apk update && apk --no-cache add git
+      - run: git config --global credential.helper store
+      - run: echo "https://${{ vars.GITLAB_USER_NAME }}:${{ secrets.GITLAB_PERSONAL_TOKEN }}@gitlab.com" > ~/.git-credentials
       - run: npm run generate
-#          tar -zcvf release.tgz dist
+
 
       - name: Deploy
         uses: saltbo/uptoc@master
@@ -45,23 +44,3 @@ jobs:
         env:
           UPTOC_UPLOADER_AK: ${{ secrets.OSS_ACCESS_KEY_ID }}
           UPTOC_UPLOADER_SK: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
-
-#      - name: "Upload Artifact"
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: anigiga-artifact
-#          path: dist
-#          retention-days: 7
-
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@master
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-#        with:
-#          tag_name: ${{github.ref}}
-#          release_name: Release ${{github.ref}}
-#          draft: false
-#          prerelease: false
-#
-
