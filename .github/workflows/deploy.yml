@@ -1,0 +1,74 @@
+name: Deploy portal to Alicloud OSS
+on:
+  push:
+    branches:
+      - stg
+      - prod
+
+env:
+  BUCKET: ${{ vars.OSS_BUCKET }}
+  ENDPOINT: ${{ vars.OSS_ENDPOINT }}
+  ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+  ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VUE_APP_NAME: ${{ vars.APP_NAME }}
+      VUE_APP_API_BASE_URL: ${{ vars.API_BASE_URL }}
+      VUE_APP_AUTH_STORE_PREFIX: ${{ vars.AUTH_STORE_PREFIX }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Build
+        uses: actions/setup-node@master
+        with:
+          node-version: 16
+          cache: 'npm'
+        run: |
+          npm ci
+          npm run generate
+#          tar -zcvf release.tgz dist
+
+      - name: "Upload Artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: anigiga-artifact
+          path: dist
+          retention-days: 7
+
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+#        with:
+#          tag_name: ${{github.ref}}
+#          release_name: Release ${{github.ref}}
+#          draft: false
+#          prerelease: false
+#
+
+  deploy-stg:
+    runs-on: ubuntu-latest
+    environment: stg
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: anigiga-artifact
+
+      - name: Deploy
+        uses: saltbo/uptoc@master
+        with:
+          driver: oss
+          region: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          bucket: saltbo-blog
+          exclude: .cache,test
+          dist: dist
+        env:
+          UPTOC_UPLOADER_AK: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          UPTOC_UPLOADER_SK: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+

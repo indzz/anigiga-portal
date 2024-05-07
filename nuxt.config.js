@@ -104,7 +104,7 @@ export default {
     },
 
     router: {
-        base: "/backend/",
+        // base: "/backend/",
         middleware: ['auth'],
         routeNameSplitter: '_',
         extendRoutes(routes, resolve) {
@@ -112,9 +112,9 @@ export default {
         }
     },
 
-    generate: {
-        dir: "../../public/backend"
-    },
+    // generate: {
+    //     dir: "../../public/backend"
+    // },
 
 
     server: {
