@@ -12,7 +12,7 @@ env:
   ACCESS_KEY_SECRET: ${{ secrets.ACCESS_KEY_SECRET }}
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     env:
       VUE_APP_NAME: ${{ vars.APP_NAME }}
@@ -25,39 +25,14 @@ jobs:
       - name: Build
         uses: actions/setup-node@master
         with:
-          node-version: 16
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run generate
+          node-version: 20
+      - script: |
+          apk update && apk --no-cache add git
+          git config --global credential.helper store
+          echo "https://${{ vars.GITLAB_USER_NAME }}:${{ secrets.GITLAB_PERSONAL_TOKEN }}@gitlab.com" > ~/.git-credentials
+          npm ci
+          npm run generate
 #          tar -zcvf release.tgz dist
-
-      - name: "Upload Artifact"
-        uses: actions/upload-artifact@v4
-        with:
-          name: anigiga-artifact
-          path: dist
-          retention-days: 7
-
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@master
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-#        with:
-#          tag_name: ${{github.ref}}
-#          release_name: Release ${{github.ref}}
-#          draft: false
-#          prerelease: false
-#
-
-  deploy-stg:
-    runs-on: ubuntu-latest
-    environment: stg
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: anigiga-artifact
 
       - name: Deploy
         uses: saltbo/uptoc@master
@@ -70,4 +45,23 @@ jobs:
         env:
           UPTOC_UPLOADER_AK: ${{ secrets.OSS_ACCESS_KEY_ID }}
           UPTOC_UPLOADER_SK: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+
+#      - name: "Upload Artifact"
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: anigiga-artifact
+#          path: dist
+#          retention-days: 7
+
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+#        with:
+#          tag_name: ${{github.ref}}
+#          release_name: Release ${{github.ref}}
+#          draft: false
+#          prerelease: false
+#
 
